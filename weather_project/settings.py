@@ -14,8 +14,8 @@ def load_env_file(path):
         if not line or line.startswith("#") or "=" not in line:
             continue
         key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip().strip("'\""))
-
+        # os.environ.setdefault(key.strip(), value.strip().strip("'\""))
+        os.environ[key.strip()] = value.strip()
 
 def env_bool(name, default=False):
     value = os.environ.get(name)
@@ -26,8 +26,10 @@ def env_bool(name, default=False):
 
 load_env_file(BASE_DIR / ".env")
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-weather-dashboard-secret")
-DEBUG = env_bool("DJANGO_DEBUG", True)
+# SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-weather-dashboard-secret")
+# DEBUG = env_bool("DJANGO_DEBUG", True)
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+DEBUG = env_bool("DJANGO_DEBUG", False)
 # ALLOWED_HOSTS = [
 #     host.strip()
 #     for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
@@ -53,10 +55,22 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "weather",
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
+# MIDDLEWARE = [
+#     "django.middleware.security.SecurityMiddleware",
+#     "django.contrib.sessions.middleware.SessionMiddleware",
+#     "django.middleware.common.CommonMiddleware",
+#     "django.middleware.csrf.CsrfViewMiddleware",
+#     "django.contrib.auth.middleware.AuthenticationMiddleware",
+#     "django.contrib.messages.middleware.MessageMiddleware",
+#     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+# ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -64,7 +78,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
+# MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 ROOT_URLCONF = "weather_project.urls"
 
 TEMPLATES = [
@@ -91,6 +106,14 @@ DATABASES = {
     }
 }
 
+# import dj_database_url
+#
+# DATABASES = {
+# "default": dj_database_url.config(
+# default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+# )
+# }
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -114,6 +137,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static",]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # STATIC_ROOT = os.path.join(BASE_DIR, "static,staticfiles")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
