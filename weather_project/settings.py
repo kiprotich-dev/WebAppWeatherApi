@@ -35,9 +35,12 @@ DEBUG = env_bool("DJANGO_DEBUG", True)
 # ]
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    ".onrender.com"
+    host.strip()
+    for host in os.environ.get(
+        "DJANGO_ALLOWED_HOSTS",
+        "127.0.0.1,localhost,.onrender.com"
+    ).split(",")
+    if host.strip()
 ]
 
 
