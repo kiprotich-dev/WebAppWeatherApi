@@ -28,11 +28,17 @@ load_env_file(BASE_DIR / ".env")
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-weather-dashboard-secret")
 DEBUG = env_bool("DJANGO_DEBUG", True)
+# ALLOWED_HOSTS = [
+#     host.strip()
+#     for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+#     if host.strip()
+# ]
 ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-    if host.strip()
+    "127.0.0.1",
+    "localhost",
+    ".onrender.com"
 ]
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
