@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Register | Weather Dashboard{% endblock %}
+
+{% block content %}
+<main class="auth-shell">
+    <section class="auth-card">
+        <div class="brand-block">
+            <span class="brand-mark">W</span>
+            <div>
+                <p class="eyebrow">Weather Dashboard</p>
+                <h1>Create account</h1>
+            </div>
+        </div>
+
+        <form id="register-form" class="stacked-form">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+
+            <button class="primary-button" type="submit">Register</button>
+        </form>
+
+        <p id="form-message" class="message" aria-live="polite"></p>
+        <p class="auth-switch">Already registered? <a href="/login/">Login</a></p>
+    </section>
+</main>
+<script src="{% static 'js/auth.js' %}" defer></script>
+{% endblock %}

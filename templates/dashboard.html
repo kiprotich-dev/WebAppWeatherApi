@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard | Weather Dashboard{% endblock %}
+
+{% block content %}
+<main class="dashboard-shell">
+    <header class="topbar">
+        <div class="brand-block compact">
+            <span class="brand-mark">W</span>
+            <div>
+                <p class="eyebrow">Weather Dashboard</p>
+                <h1 id="welcome-heading">Dashboard</h1>
+            </div>
+        </div>
+        <button id="logout-button" class="ghost-button" type="button">Logout</button>
+    </header>
+
+    <section class="search-band">
+        <form id="search-form" class="search-form">
+            <label class="sr-only" for="city-input">City</label>
+            <input id="city-input" name="city" type="search" placeholder="Search city" autocomplete="off" required>
+            <button class="primary-button" type="submit">Search</button>
+        </form>
+        <p id="global-message" class="message" aria-live="polite"></p>
+    </section>
+
+    <section class="dashboard-grid">
+        <div class="weather-panel">
+            <div class="panel-header">
+                <h2>Current weather</h2>
+                <button id="save-favorite-button" class="secondary-button hidden" type="button">Save favorite</button>
+            </div>
+            <div id="current-weather" class="empty-state">Search for a city.</div>
+        </div>
+
+        <div class="weather-panel">
+            <div class="panel-header">
+                <h2>5-day forecast</h2>
+            </div>
+            <div id="forecast-list" class="forecast-grid empty-state">No forecast loaded.</div>
+        </div>
+
+        <aside class="favorites-panel">
+            <div class="panel-header">
+                <h2>Favorites</h2>
+                <span id="favorite-count" class="count-pill">0/3</span>
+            </div>
+            <div id="favorites-list" class="favorites-list empty-state">No saved cities.</div>
+        </aside>
+    </section>
+</main>
+<script src="{% static 'js/app.js' %}" defer></script>
+{% endblock %}

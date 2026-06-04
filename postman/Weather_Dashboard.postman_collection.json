@@ -1,0 +1,231 @@
+{
+  "info": {
+    "name": "Weather Dashboard",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
+      "value": ""
+    },
+    {
+      "key": "city",
+      "value": "Nairobi"
+    }
+  ],
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Demo User\",\n  \"email\": \"demo@example.com\",\n  \"password\": \"StrongPass123!\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.tokens) {",
+              "  pm.collectionVariables.set('access_token', json.tokens.access);",
+              "  pm.collectionVariables.set('refresh_token', json.tokens.refresh);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo@example.com\",\n  \"password\": \"StrongPass123!\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.tokens) {",
+              "  pm.collectionVariables.set('access_token', json.tokens.access);",
+              "  pm.collectionVariables.set('refresh_token', json.tokens.refresh);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Current Weather",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/weather/{{city}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "weather",
+            "{{city}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "5-Day Forecast",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/forecast/{{city}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "forecast",
+            "{{city}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Favorite",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"city\": \"{{city}}\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/favorites",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "favorites"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Favorites",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/favorites",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "favorites"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Favorite",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/favorites/{{city}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "favorites",
+            "{{city}}"
+          ]
+        }
+      }
+    }
+  ]
+}
