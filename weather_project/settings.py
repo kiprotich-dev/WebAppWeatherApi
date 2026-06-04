@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-weather-dashboard-sec
 DEBUG = env_bool("DJANGO_DEBUG", True)
 ALLOWED_HOSTS = [
     host.strip()
-    for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,.onrender.com").split(",")
+    for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,*").split(",")
     if host.strip()
 ]
 # ALLOWED_HOSTS = [
@@ -108,7 +108,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static,staticfiles"]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 # STATIC_ROOT = os.path.join(BASE_DIR, "static,staticfiles")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
