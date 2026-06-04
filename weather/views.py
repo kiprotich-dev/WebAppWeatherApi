@@ -15,8 +15,21 @@ from .serializers import (
 from .services import WeatherAPIError, weather_client
 
 
+# def dashboard_page(request):
+#     return render(request, "dashboard.html")
 def dashboard_page(request):
-    return render(request, "dashboard.html")
+    city = request.GET.get("city")
+
+    print("CITY:", city)  # DEBUG
+
+    context = {}
+
+    if city:
+        context["city"] = city
+        # call API here
+
+    return render(request, "dashboard.html", context)
+
 
 
 def login_page(request):
