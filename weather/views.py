@@ -20,16 +20,19 @@ from .services import WeatherAPIError, weather_client
 def dashboard_page(request):
     city = request.GET.get("city")
 
-    print("CITY:", city)  # DEBUG
+    print("CITY:", city)
 
     context = {}
 
     if city:
-        context["city"] = city
-        # call API here
+        try:
+            context["current"] = weather_client.get_current(city)
+            context["forecast"] = weather_client.get_forecast(city)
+            context["city"] = city
+        except WeatherAPIError as e:
+            context["error"] = str(e)
 
     return render(request, "dashboard.html", context)
-
 
 
 def login_page(request):
