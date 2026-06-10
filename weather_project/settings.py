@@ -26,15 +26,9 @@ def env_bool(name, default=False):
 
 load_env_file(BASE_DIR / ".env")
 
-# SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-weather-dashboard-secret")
-# DEBUG = env_bool("DJANGO_DEBUG", True)
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 DEBUG = env_bool("DJANGO_DEBUG", False)
-# ALLOWED_HOSTS = [
-#     host.strip()
-#     for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-#     if host.strip()
-# ]
+
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -58,15 +52,6 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
 ]
 
-# MIDDLEWARE = [
-#     "django.middleware.security.SecurityMiddleware",
-#     "django.contrib.sessions.middleware.SessionMiddleware",
-#     "django.middleware.common.CommonMiddleware",
-#     "django.middleware.csrf.CsrfViewMiddleware",
-#     "django.contrib.auth.middleware.AuthenticationMiddleware",
-#     "django.contrib.messages.middleware.MessageMiddleware",
-#     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-# ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -78,7 +63,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-# MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
+
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 ROOT_URLCONF = "weather_project.urls"
 
@@ -106,13 +91,6 @@ DATABASES = {
     }
 }
 
-# import dj_database_url
-#
-# DATABASES = {
-# "default": dj_database_url.config(
-# default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
-# )
-# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
